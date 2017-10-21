@@ -1,0 +1,24 @@
+{
+  "name": "pihardv2",
+  "version": "1.0.0",
+  "description": "Alexa skill to teach you the digits of pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melissamasia/PiHardV2.git"
+  },
+  "keywords": [
+    "alexa",
+    "skill",
+    "pi"
+  ],
+  "author": "Amazon, Melissa Masia, Mason Hall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/melissamasia/PiHardV2/issues"
+  },
+  "homepage": "https://github.com/melissamasia/PiHardV2#readme"
+}
