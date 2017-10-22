@@ -108,7 +108,7 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
             if(correct){
                 var nextThree = '';
                 for (var i = valueLength; i <valueLength + 3; i++){
-                    nextThree = nextThree + pi.charAt(i) + " ";
+                    nextThree = nextThree + pi.charAt(i);
                 }
                 valueLength++;
                 responseString = getSpeechCon(true) + " You got " + valueLength + " correct digits of pi. The next three are " + nextThree;
@@ -159,7 +159,7 @@ function getSpeechCon(type){
 
 // Determines if there is a valid guess being made
 function isAnswerSlotValid(intent){
-    console.log(":tell","Made it to Answer Slot Valid Function");
+
     const answerSlotFilled = intent && intent.slots.Answer && intent.slots.Answer.value;
     const answerSlotsIsInt = answerSlotFilled && !isNaN(intent.slots.Answer.value);
     if (answerSlotsIsInt){
@@ -172,7 +172,7 @@ function isAnswerSlotValid(intent){
 // Connect to lambda and executes
 exports.handler = function(event, context) {
     var Alexa = alexa.handler(event, context);
-    Alexa.appId = "amzn1.ask.skill.5611a636-e257-438f-a14f-4a388818cf9d";
+    Alexa.appId = "amzn1.ask.skill.9c5425fc-e3c8-4948-9866-823e49b08ff2";
     Alexa.registerHandlers(handlers, startHandlers, guessHandlers);
     Alexa.execute();
 };
