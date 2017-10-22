@@ -71,14 +71,21 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
             console.log(valueLength);
         
 
+            var responseString = "";
             if(correct){
-                this.emit(":ask", "Nice! You got  " + valueLength + " correct digits of pi. The next three are" );
+                var nextThree = '';
+                for (var i = valueLength; i <valueLength + 3; i++){
+                    nextThree = nextThree + pi.charAt(i) + " ";
+                }
+                valueLength++;
+                responseString = "Nice! You got " + valueLength + " correct digits of pi. The next three are " + nextThree;
             }else {
-                this.emit(":ask", "Great work! Unfortunately, you replaced"
-                    + pi.charAt(incorrectDigit-1) + "with" + valueString.charAt(incorrectDigit-1));
+                responseString = "Nice try. Unfortunately, you replaced "
+                + pi.charAt(incorrectDigit-1) + " with " + valueString.charAt(incorrectDigit-1);
             }
-
-            this.emit(":ask", "Do you want to play again?");
+            responseString = responseString + ". <break time='2s'/>  Do you want to play again?";
+            this.emit(":ask", responseString);
+            this.emit(":responseReady");
         }
 
     },
