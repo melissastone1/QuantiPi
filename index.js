@@ -108,7 +108,7 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
             if(correct){
                 var nextThree = '';
                 for (var i = valueLength; i <valueLength + 3; i++){
-                    nextThree = nextThree + pi.charAt(i);
+                    nextThree = nextThree + " " + pi.charAt(i);
                 }
                 valueLength++;
                 responseString = getSpeechCon(true) + " You got " + valueLength + " correct digits of pi. The next three are " + nextThree;
