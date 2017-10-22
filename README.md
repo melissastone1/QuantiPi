@@ -8,7 +8,9 @@ With daily practice, you can soon be a pi wizard, otherwise known as Sir Cumfere
 Reading Materials:
 
 [Fact Skill Tutorial: Build an Alexa Skill in 6 Steps](https://developer.amazon.com/alexa-skills-kit/tutorials/fact-skill-1?&sc_channel=SEM&sc_campaign=Fact-Skill&sc_detail=Branded&sc_segment=Echo-Dev&sc_publisher=Google&sc_country=WW&sc_medium=SEM_Fact-Skill_Branded_Echo-Dev_Google_WW_0007&sc_trackingcode=0007&gclid=Cj0KCQjwvabPBRD5ARIsAIwFXBmUWe2E9UwiN2qvml6qxJ1f_eNyCqsmiouks4Tpgug7QNV62pxT71YaAhu9EALw_wcB)
+
 [Alexa Skills Kit](https://developer.amazon.com/alexa-skills-kit)
+
 [AWS Lambda Console](https://console.aws.amazon.com/lambda/)
 
 ### Prerequisites
@@ -40,6 +42,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Thanks to Brendan
-* Thanks to Reed
+* Thanks to VandyHacks, Brendan, Reed
 
