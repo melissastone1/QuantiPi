@@ -1,122 +1,160 @@
-/* Written by Mason and Melissa */
+/*
+ * Welcome to QuantiPi! 
+ * This is an Amazon Alexa skill that teaches you the digits of Pi
+ * Made for VandyHacks IV -- Fall 2017
+ * Written by Mason Hall and Melissa Masia
+ * Check out our Github and Devpost pages for more info
+ * */
+
 var alexa = require('alexa-sdk');
 
-const pi = '141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273724587006606315588174881520920962829254091715364367892590360011330530548820466521384146951941511609433057270365759591953092186117381932611793105118548074462379962749567351885752724891227938183011949129833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132000568127145263560827785771342757789609173';
+/**
+ * Constants
+ * **/
+const pi = '1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632788659361533818279682303019520353018529689957736225994138912497217752834791315155748572424541506959508295331168617278558890750983817546374649393192550604009277016711390098488240128583616035637076601047101819429555961989467678374494482553797747268471040475346462080466842590694912933136770289891521047521620569660240580381501935112533824300355876402474964732639141992726042699227967823547816360093417216412199245863150302861829';
 const HELP_MESSAGE = "I'm trying to help you learn the digits of pi. Give me your best guess and I'll help you along.";
 const WELCOME_MESSAGE = "Welcome to Pi Hard. We help you learn the digits of pi. Say lets start learning to begin.";
-const END_MESSAGE = "Thanks for playing. We hoped you learned some digits of pi.";
+const END_MESSAGE = "Thanks for playing. We hoped you learned some digits of pi." + "<say-as interpret-as='interjection'> Bon Voyage! </say-as><break strength='strong'/>" ;
 const UNHANDLED_START = "Just say Lets start learning to make a guess! ";
 const UNHANDLED_GUESS = "You did not give a valid guess. Do you want to try again?";
-var states = {
+const ONE_DIGIT_MESSAGE = "Thats not a good guess! Pi starts with 3 point 1. Do you want to try again?";
+
+/*This is a list of positive speechcons that this skill will use when a user gets a correct answer.  For a full list of supported
+speechcons, go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference */
+const speechConsCorrect = ["Ahoy", "Booya", "All righty", "Bam", "Bazinga", "Bingo", "Boom", "Boing","Bravo", 
+"Cha Ching", "Cheers", "Dynomite", "Hip hip hooray", "Hurrah", "Hurray", "Huzzah","Mazel Tov", "Oh dear.  Just kidding.  Hurray", "Kaboom", "Kaching", "Oh snap", "Phew",
+"Righto", "Way to go", "Well done", "Whee", "Woo hoo", "Wowza", "Yowsa"];
+
+/*This is a list of negative speechcons that this skill will use when a user gets an incorrect answer.  For a full list of supported
+speechcons, go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference */
+const speechConsWrong = ["Argh", "Aw man", "Blarg", "Blast", "Boo", "Bummer", "Darn", "D'oh", "Dun dun dun", "Eek", "Honk", 
+"Mamma mia", "Oh boy", "Oh dear", "Oh brother", "Oof", "Ouch", "Ruh roh", "Jeepers creepers","Good Grief", "Shucks", "Uh oh", "Wah wah", "Whoops a daisy", "Yikes"];
+
+// Two possible states for Alexa to be in, and each have different handlers
+const states = {
     START: "_START",
     GUESS: "_GUESS"
 };
 
 const handlers = {
+    // Triggers when user opens QuantiPi
     'LaunchRequest': function (){
         this.handler.state = states.START;
         this.emitWithState("Start");
     },
+    // Default Help Intent from Amazon
     'AMAZON.HelpIntent': function(){
         this.emit(":ask", HELP_MESSAGE,HELP_MESSAGE);
         this.emit(":responseReady");
-    },
-    "Unhandled": function (){
-        this.emit(':ask', "Unhandled handlers",HELP_MESSAGE);
     }
 };
 
 var startHandlers = alexa.CreateStateHandler(states.START, {
+    // Delivers welcome message and moves user to guess
     "Start":function(){
         this.emit(":ask", WELCOME_MESSAGE);
         this.handler.state = states.GUESS;
         this.emitWithState("Guess");
         
     },
+    // Acts as a middle man between the start and the guess
     "PlayIntent": function (){
         this.handler.state = states.GUESS;
         this.emitWithState("Guess");
     },
+    // Default Help Intent from Amazon
     'AMAZON.HelpIntent': function(){
         this.emit(":ask", HELP_MESSAGE,HELP_MESSAGE);
         this.emit(":responseReady");
     },
+    // Deals with all other start inputs
     "Unhandled": function (){
         this.emit(':ask', UNHANDLED_START,HELP_MESSAGE);
     }
 });
 
 var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
+    // Prompts the user to give a guess
     "Guess": function (){
         this.emit(":ask","Tell me the digits of pi that you know.");
         this.emit("GuessIntent");
-        console.log("made it to here");
     },
+    // Deals with the edge condition when someone says "3"
     "OneDigitIntent" : function(){
-        this.emit(":ask","Thats not a good guess! Pi starts with 3 point 1. Do you want to try again?")
+        this.emit(":ask",ONE_DIGIT_MESSAGE);
     },
-    
+    // The workhouse of the skill. Attempts to take the slot value of the 
     "GuessIntent": function () {
         
-        console.log("Got to guess intent");
         var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
         
-        console.log(answerSlotValid);
         if (answerSlotValid){
             var valueString = answerSlotValid.toString();
-            console.log(valueString);
             var correct = true;
             var incorrectDigit = 0;
-        
             var valueLength = valueString.length;
+            var responseString = "";
+
             for (var i = 0; i < valueLength; i++){
                 if (valueString.charAt(i) !== pi.charAt(i)){
                     correct = false;
                     incorrectDigit = i + 1;
-                    
                     break;
                 }
             }
-            console.log(incorrectDigit);
-            console.log(correct);
-            console.log(valueLength);
-        
             
-            var responseString = "";
             if(correct){
                 var nextThree = '';
                 for (var i = valueLength; i <valueLength + 3; i++){
                     nextThree = nextThree + pi.charAt(i) + " ";
                 }
                 valueLength++;
-                responseString = "Nice! You got " + valueLength + " correct digits of pi. The next three are " + nextThree;
+                responseString = getSpeechCon(true) + " You got " + valueLength + " correct digits of pi. The next three are " + nextThree;
             }else {
-                responseString = "Nice try. Unfortunately, you replaced "
+                responseString = getSpeechCon(false) + " Unfortunately, you replaced "
                 + pi.charAt(incorrectDigit-1) + " with " + valueString.charAt(incorrectDigit-1);
             }
-            responseString = responseString + ". <break time='1s'/>  Do you want to play again?";
+            responseString = responseString + ". <break time='.5s'/>  Do you want to play again?";
+
             this.emit(":ask", responseString);
             this.emit(":responseReady");
+
         } else{
             this.emit(":ask",UNHANDLED_GUESS);
         }
     },
+    // Default Yes Intent from Amazon
     "AMAZON.YesIntent": function () {
 
         this.emitWithState("Guess");
     },
+    // Default No Intent from Amazon
     "AMAZON.NoIntent": function () {
         this.emit(":tell",END_MESSAGE);
     },
+    // Default Help Intent from Amazon
     'AMAZON.HelpIntent': function(){
         this.emit(":ask", HELP_MESSAGE);
         this.emit(":responseReady");
     },
+    // Deals with all other guesses
     "Unhandled": function (){
         this.emit(':ask',UNHANDLED_GUESS);
     }
 });
 
+
+function getRandom(min, max){
+   return Math.floor(Math.random() * (max-min+1)+min);
+}
+
+function getSpeechCon(type){
+   var speechCon = "";
+   if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
+   else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
+}
+
+// Determines if there is a valid guess being made
 function isAnswerSlotValid(intent){
     console.log(":tell","Made it to Answer Slot Valid Function");
     const answerSlotFilled = intent && intent.slots.Answer && intent.slots.Answer.value;
