@@ -51,11 +51,14 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
     "GuessIntent": function () {
 
         var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
+        console.log(answerSlotValid);
         if (answerSlotValid){
             var valueString = answerSlotValid.toString();
+            console.log(valueString);
             var correct = true;
             var incorrectDigit = 0;
-            var valueLength = valueString.length();
+        
+            var valueLength = valueString.length;
             for (var i = 0; i < valueLength; i++){
                 if (valueString.charAt(i) !== pi.charAt(i)){
                     correct = false;
@@ -63,9 +66,13 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
                     break;
                 }
             }
+            console.log(incorrectDigit);
+            console.log(correct);
+            console.log(valueLength);
+        
 
             if(correct){
-                this.emit(":ask", "Nice! You got  " + valueLength + "correct digits of pi. The next three are" );
+                this.emit(":ask", "Nice! You got  " + valueLength + " correct digits of pi. The next three are" );
             }else {
                 this.emit(":ask", "Great work! Unfortunately, you replaced"
                     + pi.charAt(incorrectDigit-1) + "with" + valueString.charAt(incorrectDigit-1));
@@ -92,6 +99,7 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
 });
 
 function isAnswerSlotValid(intent){
+    console.log(":tell","Made it to Answer Slot Valid Function");
     const answerSlotFilled = intent && intent.slots.Answer && intent.slots.Answer.value;
     const answerSlotsIsInt = answerSlotFilled && !isNaN(intent.slots.Answer.value);
     if (answerSlotsIsInt){
