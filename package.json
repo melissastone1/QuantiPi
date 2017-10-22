@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/melissamasia/PiHardV2/issues"
   },
-  "homepage": "https://github.com/melissamasia/PiHardV2#readme"
+  "homepage": "https://github.com/melissamasia/PiHardV2#readme",
+  "dependencies": {
+    "alexa-sdk": "^1.0.15"
+  }
 }

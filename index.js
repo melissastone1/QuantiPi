@@ -49,6 +49,7 @@ const handlers = {
     }
 };
 
+// handlers for the START state
 var startHandlers = alexa.CreateStateHandler(states.START, {
     // Delivers welcome message and moves user to guess
     "Start":function(){
@@ -73,6 +74,7 @@ var startHandlers = alexa.CreateStateHandler(states.START, {
     }
 });
 
+// Handlers for the GUESS state
 var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
     // Prompts the user to give a guess
     "Guess": function (){
@@ -143,11 +145,12 @@ var guessHandlers = alexa.CreateStateHandler(states.GUESS, {
     }
 });
 
-
+// Returns a random number between min and max
 function getRandom(min, max){
    return Math.floor(Math.random() * (max-min+1)+min);
 }
 
+// Returns a random positive or negative speech con depending on type, true or false respectively
 function getSpeechCon(type){
    var speechCon = "";
    if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
@@ -166,10 +169,10 @@ function isAnswerSlotValid(intent){
     }
 }
 
-// Connect to lambda
+// Connect to lambda and executes
 exports.handler = function(event, context) {
     var Alexa = alexa.handler(event, context);
-    Alexa.appId = "amzn1.ask.skill.56f94021-5419-4e60-bf1e-03e9d205b492";
+    Alexa.appId = "amzn1.ask.skill.5611a636-e257-438f-a14f-4a388818cf9d";
     Alexa.registerHandlers(handlers, startHandlers, guessHandlers);
     Alexa.execute();
 };
