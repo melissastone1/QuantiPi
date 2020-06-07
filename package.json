@@ -1,14 +1,11 @@
 {
-  "name": "pihardv2",
+  "name": "QuantiPi",
   "version": "1.0.0",
-  "description": "Alexa skill to teach you the digits of pi",
+  "description": "Amazon Echo skill to teach you the digits of pi",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/melissamasia/PiHardV2.git"
+    "url": "git+https://github.com/melissamasia/QuantiPi.git"
   },
   "keywords": [
     "alexa",
@@ -17,10 +14,7 @@
   ],
   "author": "Amazon, Melissa Masia, Mason Hall",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/melissamasia/PiHardV2/issues"
-  },
-  "homepage": "https://github.com/melissamasia/PiHardV2#readme",
+  "homepage": "https://github.com/melissamasia/QuantiPi#readme",
   "dependencies": {
     "alexa-sdk": "^1.0.15"
   }

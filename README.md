@@ -15,9 +15,9 @@ Reading Materials:
 
 ### Prerequisites
 
-Clone or download this repository, and open it in your favorite IDE or on the command line
+Clone or download this repository, and open it in your favorite IDE.
 
-Install required modules with `NPM`
+Install required modules with `npm install`
 
 When the code in index.js runs within AWS Lambda, it relies on the `alexa-sdk` module, which is installed by default with the Fact skill blueprint. In order to test and deploy projects from your local laptop, you will need to bundle in required modules such as the alexa-sdk within your folder.
 
